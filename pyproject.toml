@@ -1,0 +1,31 @@
+[tool.black]
+line-length = 99
+exclude = '''
+/(
+    \.git
+    | data
+    | tensorboard_logs
+    | \.vscode
+    | output
+)/
+'''
+
+[tool.isort]
+profile = "black"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "slow: marks tests as slow (testing trainings for instance)",
+    "train: marks tests concerning the training process",
+    "data: marks tests concerning datasets and data loading",
+    "dtu: marks tests  on the DTU dataset",
+    "blended_mvs: marks tests  on the Blended MVS dataset",
+    "blended_mvg: marks tests  on the Blended MVG dataset",
+    "eth3d: marks tests on the ETH3D dataset",
+    "mvsnet: marks tests on mvsnet",
+    "cas_mvsnet: marks tests on cas_mvsnet",
+    "ucsnet: marks tests on ucsnet",
+    "d2hc_rmvsnet: marks tests on d2hc_rmvsnet",
+    "patchmatchnet: marks tests on patchmatchnet",
+]

@@ -1,0 +1,35 @@
+name: guided-MVS
+channels:
+    - pytorch-lts
+    - conda-forge
+    - defaults
+dependencies:
+
+    # core
+    - python=3.8
+    - cudatoolkit=11.1
+    - pytorch=1.8.*
+    - pytorch-lightning=1.4.*
+    - torchvision
+    - numpy>=1.20.0
+    - tqdm
+    - pyyaml
+    - scipy
+    - tensorboard
+    - joblib
+    - pip
+
+    # dev
+    - black
+    - isort
+    - pre-commit
+    - pytest
+
+    - pip:
+      - opencv-python
+      - cmapy >=0.6.0, <1.0
+      - plyfile
+      - pillow
+      - GitPython
+      - mlflow
+      - pysftp

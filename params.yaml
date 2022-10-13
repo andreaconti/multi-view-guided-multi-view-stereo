@@ -1,0 +1,17 @@
+model: patchmatchnet
+
+# train parameters
+train:
+  dataset: dtu_yao    # dtu_yao | blended_mvs  (in data/)
+  epochs: 5   # <int> | null
+  steps: null  # <int> | null, if both epochs and steps it takes the minimum one
+  batch_size: 1
+  lr: 0.001
+  epochs_lr_decay: null  # list of increasing int like [10, 12, 14] or null to disable
+  epochs_lr_gamma: 2
+  weight_decay: 0.0
+  ndepths: 128  # 128
+  views: 5
+  hints: mvguided_filtered  # not_guided | guided | mvguided | mvguided_filtered
+  hints_filter_window: [9, 9]
+  hints_density: 0.03

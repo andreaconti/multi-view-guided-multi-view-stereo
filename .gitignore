@@ -1,0 +1,11 @@
+.python-version
+**/__pycache__/
+data/*
+!data/README.md
+eval_output/
+guided-mvs.code-workspace
+.pytest_cache
+notebooks/
+.current_run.yaml
+.envrc
+mlruns/
