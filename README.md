@@ -1,31 +1,33 @@
-# Guided Multi View Stereo
+# Multi-View Guided Multi-View Stereo
+
+_[Matteo Poggi](https://mattpoggi.github.io/)\*, [Andrea Conti](https://andreaconti.github.io/)\*, [Stefano Mattoccia](http://vision.deis.unibo.it/~smatt/Site/Home.html)  *joint authorship_
+
+
+[[arxiv]]()
+[[project page]](https://andreaconti.github.io/projects/multiview_guided_multiview_stereo/)
+
+This is the official source code of Multi-View Guided Multi-View Stereo presented at [IEEE/RSJ International Conference on Intelligent Robots and Systems](https://iros2022.org/)
 
 ## Installation
 
-Install the dependencies using Conda:
+Install the dependencies using Conda or [Mamba](https://github.com/mamba-org/mamba):
 
 ```bash
 $ conda env create -f environment.yml
-$ conda activate guided-MVS
+$ conda activate guided-mvs
 ```
 
 ## Download the dataset(s)
 
-Download the pre-processed DTU dataset:
+Download the used datasets:
 
-* [SampleSet](http://roboimagedata.compute.dtu.dk/?page_id=36)
-* [MVS Data](http://roboimagedata.compute.dtu.dk/?page_id=36)
-* [training set](https://polybox.ethz.ch/index.php/s/ugDdJQIuZTk4S35)
-* [evaluation set](https://drive.google.com/file/d/1jN8yEQX0a-S22XwUjISM8xSJD39pFLL_/view?usp=sharing)
+* [DTU](http://roboimagedata.compute.dtu.dk/?page_id=36) preprocessed by [patchmatchnet](https://github.com/FangjinhuaWang/PatchmatchNet), [train](https://polybox.ethz.ch/index.php/s/ugDdJQIuZTk4S35) and [val](https://drive.google.com/file/d/1jN8yEQX0a-S22XwUjISM8xSJD39pFLL_/view?usp=sharing)
+* [BlendedMVG](https://github.com/YoYo000/BlendedMVS), download the lowres version from [BlendedMVS](https://1drv.ms/u/s!Ag8Dbz2Aqc81gVDu7FHfbPZwqhIy?e=BHY07t), [BlendedMVS+](https://1drv.ms/u/s!Ag8Dbz2Aqc81gVLILxpohZLEYiIa?e=MhwYSR), [BlendedMVS++](https://1drv.ms/u/s!Ag8Dbz2Aqc81gVHCxmURGz0UBGns?e=Tnw2KY)
 
-Download Blended MVS, MVS+ and MVS++ from [here](https://github.com/YoYo000/BlendedMVS).
-
-And organize them as follows:
+And organize them as follows under the data folder (sym-links works fine):
  
 ```
 data/dtu
-|-- SampleSet
-    |-- MVS Data
 |-- train_data
     |-- Cameras_1
     |-- Depths_raw
@@ -43,7 +45,7 @@ data/blended-mvs
 |-- ..
 ```
 
-## Test everything is fine (optional but useful)
+## [Optional] Test everything is fine
 
 This project implements some tests to preliminarily check everything is fine. Tests are grouped by different tags.
 
@@ -73,7 +75,7 @@ $ pytest -m "data and not dtu"
 
 ## Training
 
-To train a model, edit the ``params.yaml`` file specifying the model to be trained among the following:
+To train a model, edit ``params.yaml`` specifying the model to be trained among the following:
 
 * [cas_mvsnet](https://arxiv.org/pdf/1912.06378.pdf)
 * [d2hc_rmvsnet](https://www.ecva.net/papers/eccv_2020/papers_ECCV/papers/123490647.pdf)

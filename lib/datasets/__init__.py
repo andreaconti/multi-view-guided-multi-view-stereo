@@ -5,7 +5,7 @@ from typing import Callable, List, Literal, Optional, Union
 from pytorch_lightning import LightningDataModule
 from torch.utils.data import DataLoader
 
-from . import blended_mvg_utils, blended_mvs_utils, dtu_utils, eth3d_utils
+from . import blended_mvg_utils, blended_mvs_utils, dtu_utils
 from .dtu_blended_mvs import MVSDataset, MVSSample
 
 __all__ = ["MVSDataModule", "MVSSample", "find_dataset_def", "find_scans"]
@@ -15,7 +15,7 @@ class MVSDataModule(LightningDataModule):
     def __init__(
         self,
         # selection of the dataset
-        name: Literal["dtu_yao", "blended_mvs", "blended_mvg", "eth3d"],
+        name: Literal["dtu_yao", "blended_mvs", "blended_mvg"],
         # args for the dataloader
         batch_size: int = 1,
         # args for the dataset
@@ -61,16 +61,15 @@ class MVSDataModule(LightningDataModule):
 
 
 def find_dataset_def(
-    name: Literal["dtu_yao", "blended_mvs", "blended_mvg", "eth3d"],
+    name: Literal["dtu_yao", "blended_mvs", "blended_mvg"],
     datapath: Union[Path, str, None] = None,
 ) -> Callable[..., MVSDataset]:
-    assert name in ["dtu_yao", "blended_mvs", "blended_mvg", "eth3d"]
+    assert name in ["dtu_yao", "blended_mvs", "blended_mvg"]
     if datapath is None:
         datapath = {
             "dtu_yao": "data/dtu",
             "blended_mvs": "data/blended-mvs",
             "blended_mvg": "data/blended-mvs",
-            "eth3d": "data/eth3d",
         }[name]
     datapath = Path(datapath)
 
@@ -96,22 +95,17 @@ _SCANS = {
         "val": blended_mvg_utils.val_scans(),
         "test": blended_mvg_utils.test_scans(),
     },
-    "eth3d": {
-        "train": eth3d_utils.train_scans(),
-        "val": eth3d_utils.val_scans(),
-        "test": eth3d_utils.test_scans(),
-    },
 }
 
 
 def find_scans(
-    dataset_name: Literal["dtu_yao", "blended_mvs", "blended_mvg", "eth3d"],
+    dataset_name: Literal["dtu_yao", "blended_mvs", "blended_mvg"],
     split: Literal["train", "val", "test"],
 ) -> Optional[List[str]]:
     try:
         return _SCANS[dataset_name][split]
     except KeyError:
-        if dataset_name not in ["dtu_yao", "blended_mvs", "blended_mvg", "eth3d"]:
+        if dataset_name not in ["dtu_yao", "blended_mvs", "blended_mvg"]:
             raise ValueError(f"{dataset_name} not in dtu_utils, blended_mvs, blended_mvg")
         elif split not in ["train", "val", "test"]:
             raise ValueError(f"{split} not in train, val, test")

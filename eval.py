@@ -52,7 +52,7 @@ def main():
         "--dataset",
         type=str,
         default="dtu_yao",
-        choices=["dtu_yao", "blended_mvs", "blended_mvg", "eth3d"],
+        choices=["dtu_yao", "blended_mvs", "blended_mvg"],
         help="dataset to load",
     )
     parser.add_argument(

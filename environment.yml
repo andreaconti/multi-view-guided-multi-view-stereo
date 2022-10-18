@@ -1,4 +1,4 @@
-name: guided-MVS
+name: guided-mvs
 channels:
     - pytorch-lts
     - conda-forge
