@@ -1,6 +1,6 @@
 # Multi-View Guided Multi-View Stereo
 
-_[Matteo Poggi](https://mattpoggi.github.io/)\*, [Andrea Conti](https://andreaconti.github.io/)\*, [Stefano Mattoccia](http://vision.deis.unibo.it/~smatt/Site/Home.html)  *joint authorship_
+_[Matteo Poggi](https://mattpoggi.github.io/)\*, [Andrea Conti](https://andreaconti.github.io/)\*, [Stefano Mattoccia](http://vision.deis.unibo.it/~smatt/Site/Home.html)  *joint first authorship_
 
 
 [[arxiv]]()
