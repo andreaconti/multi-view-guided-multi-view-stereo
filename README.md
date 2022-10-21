@@ -8,6 +8,18 @@ _[Matteo Poggi](https://mattpoggi.github.io/)\*, [Andrea Conti](https://andreaco
 
 This is the official source code of Multi-View Guided Multi-View Stereo presented at [IEEE/RSJ International Conference on Intelligent Robots and Systems](https://iros2022.org/)
 
+## Citation
+
+```
+@inproceedings{poggi2022guided,
+  title={Multi-View Guided Multi-View Stereo},
+  author={Poggi, Matteo and Conti, Andrea and Mattoccia, Stefano},
+  booktitle={IEEE/RSJ International Conference on Intelligent Robots and Systems},
+  note={IROS},
+  year={2022}
+}
+```
+
 ## Installation
 
 Install the dependencies using Conda or [Mamba](https://github.com/mamba-org/mamba):
