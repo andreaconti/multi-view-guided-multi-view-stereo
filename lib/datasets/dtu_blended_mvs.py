@@ -14,7 +14,6 @@ from torch.utils.data import Dataset
 import lib.datasets.blended_mvg_utils as mvg_utils
 import lib.datasets.blended_mvs_utils as mvs_utils
 import lib.datasets.dtu_utils as dtu_utils
-import lib.datasets.eth3d_utils as eth3d_utils
 
 
 class MVSSample(TypedDict):
@@ -57,8 +56,6 @@ class MVSDataset(Dataset):
             self.ds_utils = mvs_utils
         elif name == "blended_mvg":
             self.ds_utils = mvg_utils
-        elif name == "eth3d":
-            self.ds_utils = eth3d_utils
         else:
             raise ValueError("datasets supported: dtu_yao, blended_mvs, blended_mvg")
 
