@@ -279,11 +279,6 @@ class UNetConvLSTM(nn.Module):  # input 3D feature volume
 
         self.height, self.width = input_size  # feature: height, width)
         self.gn = gn
-        print(
-            "Training Phase in UNetConvLSTM: {}, {}, gn: {}".format(
-                self.height, self.width, self.gn
-            )
-        )
         self.input_dim = input_dim  # input channel
         self.hidden_dim = hidden_dim  # output channel [16, 16, 16, 16, 16, 8]
         self.kernel_size = kernel_size  # kernel size  [[3, 3]*5]

@@ -104,12 +104,15 @@ class DepthNet(nn.Module):
 
         with torch.no_grad():
             # photometric confidence
-            prob_volume_sum4 = 4 * F.avg_pool3d(
-                F.pad(prob_volume.unsqueeze(1), pad=(0, 0, 0, 0, 1, 2)),
-                (4, 1, 1),
-                stride=1,
-                padding=0,
-            ).squeeze(1)
+            prob_volume_sum4 = (
+                4
+                * F.avg_pool3d(
+                    F.pad(prob_volume.unsqueeze(1), pad=(0, 0, 0, 0, 1, 2)),
+                    (4, 1, 1),
+                    stride=1,
+                    padding=0,
+                ).squeeze(1)
+            )
             depth_index = depth_regression(
                 prob_volume,
                 depth_values=torch.arange(num_depth, device=prob_volume.device, dtype=torch.float),
@@ -142,12 +145,6 @@ class CascadeMVSNet(nn.Module):
         self.arch_mode = arch_mode
         self.cr_base_chs = cr_base_chs
         self.num_stage = len(ndepths)
-        print(
-            "**********netphs:{}, depth_intervals_ratio:{},  grad:{}, chs:{}************".format(
-                ndepths, depth_interals_ratio, self.grad_method, self.cr_base_chs
-            )
-        )
-
         assert len(ndepths) == len(depth_interals_ratio)
 
         self.stage_infos = {
@@ -196,7 +193,6 @@ class CascadeMVSNet(nn.Module):
         outputs = {}
         depth, cur_depth = None, None
         for stage_idx in [2, 1, 0]:  # range(self.num_stage):
-            # print("*********************stage{}*********************".format(stage_idx + 1))
             # stage feature, proj_mats, scales
             features_stage = [feat["stage_{}".format(stage_idx)] for feat in features]
             proj_matrices_stage = proj_matrices["stage_{}".format(stage_idx)]  # + 1)]

@@ -475,13 +475,6 @@ class MVSNet(nn.Module):
         self.refine_net = refine_net
         self.dp_ratio = dp_ratio
         self.image_scale = image_scale
-        print(
-            "MVSNet model , refine: {}, refine_net: {},  fea_net: {}, cost_net: {}, origin_size: {}, image_scale: {}".format(
-                self.refine, refine_net, fea_net, cost_net, self.origin_size, self.image_scale
-            )
-        )
-
-        print("cost aggregation: ", self.cost_aggregation)
 
         if fea_net == "FeatureNet":
             self.feature = FeatureNet()
