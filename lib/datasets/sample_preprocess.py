@@ -158,6 +158,8 @@ class MVSSampleTransform:
             "imgs": {k: torch.stack(v) for k, v in imgs.items()},
             "depth": depths,
             "proj_matrices": {k: torch.stack(v) for k, v in proj_matrices.items()},
+            "intrinsics": torch.from_numpy(np.stack(sample["intrinsics"])),
+            "extrinsics": torch.from_numpy(np.stack(sample["extrinsics"])),
             "depth_min": sample["ref_depth_min"],
             "depth_max": sample["ref_depth_max"],
             "depth_values": torch.from_numpy(sample["ref_depth_values"]),
