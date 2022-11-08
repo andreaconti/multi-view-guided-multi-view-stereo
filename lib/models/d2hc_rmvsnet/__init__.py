@@ -1,4 +1,5 @@
 import logging
+import warnings
 from types import SimpleNamespace
 from typing import Any, Optional
 
@@ -40,30 +41,33 @@ class SimpleInterfaceNet(nn.Module):
         depth_values: Tensor,
         hints: Optional[Tensor] = None,
     ):
-        # compute poses
-        proj_mat = extrinsics.clone()
-        intrinsics_copy = intrinsics.clone()
-        intrinsics_copy[..., :2, :] = intrinsics_copy[..., :2, :] / 4
-        proj_mat[..., :3, :4] = intrinsics_copy @ proj_mat[..., :3, :4]
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", UserWarning)
 
-        # image resize
-        imgs = torch.stack(
-            [
-                F.interpolate(img, scale_factor=0.25, mode="bilinear", align_corners=True)
-                for img in torch.unbind(imgs, 2)
-            ],
-            2,
-        )
+            # compute poses
+            proj_mat = extrinsics.clone()
+            intrinsics_copy = intrinsics.clone()
+            intrinsics_copy[..., :2, :] = intrinsics_copy[..., :2, :] / 4
+            proj_mat[..., :3, :4] = intrinsics_copy @ proj_mat[..., :3, :4]
 
-        # validhints
-        validhints = None
-        if hints is not None:
-            validhints = (hints > 0).to(torch.float32)
+            # image resize
+            imgs = torch.stack(
+                [
+                    F.interpolate(img, scale_factor=0.25, mode="bilinear", align_corners=True)
+                    for img in torch.unbind(imgs, 2)
+                ],
+                2,
+            )
 
-        # call
-        out = self.model(imgs, proj_mat, depth_values, hints, validhints)
-        self.all_outputs = out
-        return out["depth"]["stage_0"]
+            # validhints
+            validhints = None
+            if hints is not None:
+                validhints = (hints > 0).to(torch.float32)
+
+            # call
+            out = self.model(imgs, proj_mat, depth_values, hints, validhints)
+            self.all_outputs = out
+            return out["depth"]["stage_0"]
 
 
 class NetBuilder(nn.Module):

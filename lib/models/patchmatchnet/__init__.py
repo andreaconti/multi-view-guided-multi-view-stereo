@@ -1,3 +1,4 @@
+import warnings
 from types import SimpleNamespace
 from typing import Any, Optional
 
@@ -39,44 +40,47 @@ class SimpleInterfaceNet(nn.Module):
         depth_values: Tensor,
         hints: Optional[Tensor] = None,
     ):
-        # compute poses
-        proj_matrices = {}
-        for i in range(4):
-            proj_mat = extrinsics.clone()
-            intrinsics_copy = intrinsics.clone()
-            intrinsics_copy[..., :2, :] = intrinsics_copy[..., :2, :] / (2 ** i)
-            proj_mat[..., :3, :4] = intrinsics_copy @ proj_mat[..., :3, :4]
-            proj_matrices[f"stage_{i}"] = proj_mat
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", UserWarning)
 
-        # downsample images
-        imgs_stages = {}
-        h, w = imgs.shape[-2:]
-        for i in range(4):
-            dsize = h // (2 ** i), w // (2 ** i)
-            imgs_stages[f"stage_{i}"] = torch.stack(
-                [
-                    F.interpolate(img, dsize, mode="bilinear", align_corners=True)
-                    for img in torch.unbind(imgs, 1)
-                ],
-                1,
+            # compute poses
+            proj_matrices = {}
+            for i in range(4):
+                proj_mat = extrinsics.clone()
+                intrinsics_copy = intrinsics.clone()
+                intrinsics_copy[..., :2, :] = intrinsics_copy[..., :2, :] / (2 ** i)
+                proj_mat[..., :3, :4] = intrinsics_copy @ proj_mat[..., :3, :4]
+                proj_matrices[f"stage_{i}"] = proj_mat
+
+            # downsample images
+            imgs_stages = {}
+            h, w = imgs.shape[-2:]
+            for i in range(4):
+                dsize = h // (2 ** i), w // (2 ** i)
+                imgs_stages[f"stage_{i}"] = torch.stack(
+                    [
+                        F.interpolate(img, dsize, mode="bilinear", align_corners=True)
+                        for img in torch.unbind(imgs, 1)
+                    ],
+                    1,
+                )
+
+            # validhints
+            validhints = None
+            if hints is not None:
+                validhints = (hints > 0).to(torch.float32)
+
+            # call
+            out = self.model(
+                imgs_stages,
+                proj_matrices,
+                depth_values.min(1).values,
+                depth_values.max(1).values,
+                hints,
+                validhints,
             )
-
-        # validhints
-        validhints = None
-        if hints is not None:
-            validhints = (hints > 0).to(torch.float32)
-
-        # call
-        out = self.model(
-            imgs_stages,
-            proj_matrices,
-            depth_values.min(1).values,
-            depth_values.max(1).values,
-            hints,
-            validhints,
-        )
-        self.all_outputs = out
-        return out["depth"]["stage_0"]
+            self.all_outputs = out
+            return out["depth"]["stage_0"]
 
 
 class NetBuilder(nn.Module):

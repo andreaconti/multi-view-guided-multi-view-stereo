@@ -1,3 +1,4 @@
+import warnings
 from types import SimpleNamespace
 from typing import Any, Optional
 
@@ -28,24 +29,27 @@ class SimpleInterfaceNet(nn.Module):
         depth_values: Tensor,
         hints: Optional[Tensor] = None,
     ):
-        # compute poses
-        proj_matrices = {}
-        for i in range(4):
-            proj_mat = extrinsics.clone()
-            intrinsics_copy = intrinsics.clone()
-            intrinsics_copy[..., :2, :] = intrinsics_copy[..., :2, :] / (2 ** i)
-            proj_mat[..., :3, :4] = intrinsics_copy @ proj_mat[..., :3, :4]
-            proj_matrices[f"stage_{i}"] = proj_mat
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", UserWarning)
 
-        # validhints
-        validhints = None
-        if hints is not None:
-            validhints = (hints > 0).to(torch.float32)
+            # compute poses
+            proj_matrices = {}
+            for i in range(4):
+                proj_mat = extrinsics.clone()
+                intrinsics_copy = intrinsics.clone()
+                intrinsics_copy[..., :2, :] = intrinsics_copy[..., :2, :] / (2 ** i)
+                proj_mat[..., :3, :4] = intrinsics_copy @ proj_mat[..., :3, :4]
+                proj_matrices[f"stage_{i}"] = proj_mat
 
-        # call
-        out = self.model(imgs, proj_matrices, depth_values, hints, validhints)
-        self.all_outputs = out
-        return out["depth"]["stage_0"]
+            # validhints
+            validhints = None
+            if hints is not None:
+                validhints = (hints > 0).to(torch.float32)
+
+            # call
+            out = self.model(imgs, proj_matrices, depth_values, hints, validhints)
+            self.all_outputs = out
+            return out["depth"]["stage_0"]
 
 
 class NetBuilder(nn.Module):
