@@ -23,11 +23,11 @@ from plyfile import PlyData, PlyElement
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
-import lib.models as models
-from lib.datasets import find_dataset_def, find_scans
-from lib.datasets.dtu_utils import read_pfm, save_pfm
-from lib.datasets.sample_preprocess import MVSSampleTransform
-from lib.utils import *
+import guided_mvs_lib.models as models
+from guided_mvs_lib.datasets import find_dataset_def, find_scans
+from guided_mvs_lib.datasets.dtu_utils import read_pfm, save_pfm
+from guided_mvs_lib.datasets.sample_preprocess import MVSSampleTransform
+from guided_mvs_lib.utils import *
 
 
 def main():

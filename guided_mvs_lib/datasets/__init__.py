@@ -18,6 +18,7 @@ class MVSDataModule(LightningDataModule):
         name: Literal["dtu_yao", "blended_mvs", "blended_mvg"],
         # args for the dataloader
         batch_size: int = 1,
+        num_workers: int = multiprocessing.cpu_count() // 2,
         # args for the dataset
         **kwargs,
     ):
@@ -27,6 +28,7 @@ class MVSDataModule(LightningDataModule):
 
         # dataloader args
         self.batch_size = batch_size
+        self.num_workers = num_workers
 
     def setup(self, stage: Optional[str] = None):
         if stage in ("fit", None):
@@ -40,7 +42,7 @@ class MVSDataModule(LightningDataModule):
             self.mvs_train,
             batch_size=self.batch_size,
             shuffle=True,
-            num_workers=multiprocessing.cpu_count() // 2,
+            num_workers=self.num_workers,
         )
 
     def val_dataloader(self):
@@ -48,7 +50,7 @@ class MVSDataModule(LightningDataModule):
             self.mvs_val,
             batch_size=1,
             shuffle=False,
-            num_workers=multiprocessing.cpu_count() // 2,
+            num_workers=self.num_workers,
         )
 
     def test_dataloader(self):
@@ -56,7 +58,7 @@ class MVSDataModule(LightningDataModule):
             self.mvs_test,
             batch_size=1,
             shuffle=False,
-            num_workers=multiprocessing.cpu_count() // 2,
+            num_workers=self.num_workers,
         )
 
 

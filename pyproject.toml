@@ -22,7 +22,6 @@ markers = [
     "dtu: marks tests  on the DTU dataset",
     "blended_mvs: marks tests  on the Blended MVS dataset",
     "blended_mvg: marks tests  on the Blended MVG dataset",
-    "eth3d: marks tests on the ETH3D dataset",
     "mvsnet: marks tests on mvsnet",
     "cas_mvsnet: marks tests on cas_mvsnet",
     "ucsnet: marks tests on ucsnet",

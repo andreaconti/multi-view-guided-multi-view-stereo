@@ -11,9 +11,9 @@ from PIL import Image
 from plyfile import PlyData
 from torch.utils.data import Dataset
 
-import lib.datasets.blended_mvg_utils as mvg_utils
-import lib.datasets.blended_mvs_utils as mvs_utils
-import lib.datasets.dtu_utils as dtu_utils
+import guided_mvs_lib.datasets.blended_mvg_utils as mvg_utils
+import guided_mvs_lib.datasets.blended_mvs_utils as mvs_utils
+import guided_mvs_lib.datasets.dtu_utils as dtu_utils
 
 
 class MVSSample(TypedDict):
@@ -39,7 +39,7 @@ def _identity_fn(x: MVSSample) -> Dict:
 class MVSDataset(Dataset):
     def __init__(
         self,
-        name: Literal["dtu_yao", "blended_mvs", "blended_mvg", "eth3d"],
+        name: Literal["dtu_yao", "blended_mvs", "blended_mvg"],
         datapath: str,
         mode: Literal["train", "val", "test"],
         nviews: int = 5,

@@ -11,9 +11,9 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from lib import models
-from lib.datasets import MVSDataModule
-from lib.datasets.sample_preprocess import MVSSampleTransform
+from guided_mvs_lib import models
+from guided_mvs_lib.datasets import MVSDataModule
+from guided_mvs_lib.datasets.sample_preprocess import MVSSampleTransform
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -39,7 +39,6 @@ _train_args = {
         pytest.param("blended_mvg", marks=pytest.mark.blended_mvg),
         pytest.param("blended_mvs", marks=pytest.mark.blended_mvs),
         pytest.param("dtu_yao", marks=pytest.mark.dtu),
-        pytest.param("eth3d", marks=pytest.mark.eth3d),
     ],
 )
 @pytest.mark.parametrize(

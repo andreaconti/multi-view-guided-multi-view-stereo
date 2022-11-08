@@ -20,10 +20,10 @@ from mlflow.tracking import MlflowClient
 from pytorch_lightning.callbacks import Callback, ModelCheckpoint
 from pytorch_lightning.loggers import MLFlowLogger
 
-import lib.models as models
-from lib.datasets import MVSDataModule
-from lib.datasets.sample_preprocess import MVSSampleTransform
-from lib.utils import *
+import guided_mvs_lib.models as models
+from guided_mvs_lib.datasets import MVSDataModule
+from guided_mvs_lib.datasets.sample_preprocess import MVSSampleTransform
+from guided_mvs_lib.utils import *
 
 
 def run_training(

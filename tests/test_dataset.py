@@ -12,14 +12,13 @@ import torch
 from PIL import Image
 
 sys.path.append(".")
-from lib.datasets import (
+from guided_mvs_lib.datasets import (
     MVSDataset,
     blended_mvg_utils,
     blended_mvs_utils,
     dtu_utils,
-    eth3d_utils,
 )
-from lib.datasets.sample_preprocess import MVSSampleTransform
+from guided_mvs_lib.datasets.sample_preprocess import MVSSampleTransform
 
 
 def _test_scans(dataset, split):
@@ -29,8 +28,6 @@ def _test_scans(dataset, split):
         ds_utils = blended_mvs_utils
     elif dataset == "blended_mvg":
         ds_utils = blended_mvg_utils
-    elif dataset == "eth3d":
-        ds_utils = eth3d_utils
 
     scans = {
         "train": ds_utils.train_scans(),
@@ -44,8 +41,6 @@ def _test_scans(dataset, split):
     path = Path("data/blended-mvs")
     if dataset == "dtu":
         path = Path("data/dtu")
-    if dataset == "eth3d":
-        path = Path("data/eth3d")
 
     missing_scans = []
     for scan in scans:
@@ -79,15 +74,6 @@ def test_dtu_scans(split):
     _test_scans("dtu", split)
 
 
-@pytest.mark.eth3d
-@pytest.mark.data
-@pytest.mark.parametrize("split", ["train", "val", "test"])
-def test_eth3d_scans(split):
-    if split in ["train", "val"]:
-        with pytest.raises(ValueError):
-            _test_scans("eth3d", split)
-
-
 @pytest.mark.blended_mvs
 @pytest.mark.data
 @pytest.mark.parametrize("split", ["train", "val", "test"])
@@ -108,8 +94,6 @@ def _test_ds_loading(name, mode, nviews, ndepths):
 
     if name in ["blended_mvs", "blended_mvg"]:
         datapath = "data/blended-mvs"
-    elif name == "eth3d":
-        datapath = "data/eth3d"
     else:
         datapath = "data/dtu"
 
@@ -153,24 +137,6 @@ def _test_ds_loading(name, mode, nviews, ndepths):
     assert isinstance(batch["ref_depth_max"], float)
     assert batch["ref_depth_values"].shape == (ndepths,)
     assert isinstance(batch["filename"], str)
-
-
-@pytest.mark.eth3d
-@pytest.mark.data
-@pytest.mark.parametrize(
-    "mode, nviews, ndepths",
-    itertools.product(
-        ["train", "val", "test"],
-        [3, 5],
-        [192, 128],
-    ),
-)
-def test_eth3d_loading(mode, nviews, ndepths):
-    if mode in ["train", "val"]:
-        with pytest.raises(ValueError):
-            _test_ds_loading("eth3d", mode, nviews, ndepths)
-    else:
-        _test_ds_loading("eth3d", mode, nviews, ndepths)
 
 
 @pytest.mark.dtu

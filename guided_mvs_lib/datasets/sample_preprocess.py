@@ -7,7 +7,7 @@ import torch
 import torchvision.transforms.functional as F
 from PIL import Image
 
-from lib.datasets.dtu_blended_mvs import MVSSample
+from guided_mvs_lib.datasets.dtu_blended_mvs import MVSSample
 
 __all__ = ["MVSSampleTransform"]
 

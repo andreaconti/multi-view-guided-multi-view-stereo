@@ -3,7 +3,7 @@
 _[Matteo Poggi](https://mattpoggi.github.io/)\*, [Andrea Conti](https://andreaconti.github.io/)\*, [Stefano Mattoccia](http://vision.deis.unibo.it/~smatt/Site/Home.html)  *joint first authorship_
 
 
-[[arxiv]]()
+[[arxiv]](https://arxiv.org/pdf/2210.11467v1.pdf)
 [[project page]](https://andreaconti.github.io/projects/multiview_guided_multiview_stereo/)
 
 This is the official source code of Multi-View Guided Multi-View Stereo presented at [IEEE/RSJ International Conference on Intelligent Robots and Systems](https://iros2022.org/)
@@ -19,6 +19,50 @@ This is the official source code of Multi-View Guided Multi-View Stereo presente
   year={2022}
 }
 ```
+
+## Load pretrained models and evaluate
+
+We release many of the mvs networks tested in the paper trained on Blended-MVG or on Blended-MVG and fine-tuned on DTU, with and without sparse depth points. To load these models can be simply used the `torch.hub` API.
+
+```python
+model = torch.hub.load(
+    "andreaconti/multi-view-guided-multi-view-stereo",
+    "mvsnet",               # mvsnet | ucsnet | d2hc_rmvsnet | patchmatchnet | cas_mvsnet
+    pretrained=True,
+    dataset="blended_mvg",  # blended_mvg | dtu_yao_blended_mvg
+    hints="not_guided",     # mvguided_filtered | not_guided | guided | mvguided
+)
+```
+
+Once loaded each model have the same following interface, moreover each pretrained models provides its training parameters under the attribute `train_params`.
+
+```python
+depth = model(
+    images,        # B x N x 3 x H x W
+    intrinsics,    # B x N x 3 x 3
+    extrinsics,    # B x N x 4 x 4
+    depth_values,  # B x D (128 usually)
+    hints,         # B x 1 x H x W (optional)
+)
+```
+
+Finally, we provide also an interface over the datasets used as follows. In this case is required Pytorch Lightning as dependency and the dataset must be stored locally.
+
+```python
+dm = torch.hub.load(
+    "andreaconti/multi-view-guided-multi-view-stereo",
+    "blended-mvg",  # blended_mvg | blended_mvs | dtu
+    root="data/blended-mvg",
+    hints="not_guided",     # mvguided_filtered | not_guided | guided | mvguided
+    hints_density=0.03,
+dm.prepare_data()
+dm.setup()
+dl = dm.train_dataloader()
+)
+
+```
+
+In [results.ipynb](https://github.com/andreaconti/multi-view-guided-multi-view/blob/main/results.ipynb) there is an example of how to reproduce some of the results showed in the paper through the `torch.hub` API.
 
 ## Installation
 
