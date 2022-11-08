@@ -55,11 +55,10 @@ dm = torch.hub.load(
     root="data/blended-mvg",
     hints="not_guided",     # mvguided_filtered | not_guided | guided | mvguided
     hints_density=0.03,
+)
 dm.prepare_data()
 dm.setup()
 dl = dm.train_dataloader()
-)
-
 ```
 
 In [results.ipynb](https://github.com/andreaconti/multi-view-guided-multi-view-stereo/blob/main/results.ipynb) there is an example of how to reproduce some of the results showed in the paper through the `torch.hub` API.
