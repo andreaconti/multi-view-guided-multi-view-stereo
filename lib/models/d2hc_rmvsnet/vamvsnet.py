@@ -547,7 +547,7 @@ class MVSNet(nn.Module):
                     src_projs[ti][:, :3, :4] = src_projs[ti][:, :3, :4] * one_scale
                 # step 2. differentiable homograph, build cost volume
                 new_num_depth = int(num_depth * one_scale)
-                new_index = torch.arange(0, 192, int(1 / one_scale)).cuda()
+                new_index = torch.arange(0, 192, int(1 / one_scale)).to(imgs[0].device)
                 new_depth_values = depth_values.index_select(1, new_index)
                 new_depth_values_list.append(new_depth_values)
                 if self.cost_aggregation == 0:

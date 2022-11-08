@@ -315,9 +315,9 @@ class D2HCRMVSNet(MVSNet):
             }
         else:
             shape = ref_feature.shape
-            depth_image = torch.zeros(shape[0], shape[2], shape[3]).cuda()  # B X H X w
-            max_prob_image = torch.zeros(shape[0], shape[2], shape[3]).cuda()
-            exp_sum = torch.zeros(shape[0], shape[2], shape[3]).cuda()
+            depth_image = torch.zeros(shape[0], shape[2], shape[3]).to(ref_feature.device)
+            max_prob_image = torch.zeros(shape[0], shape[2], shape[3]).to(ref_feature.device)
+            exp_sum = torch.zeros(shape[0], shape[2], shape[3]).to(ref_feature.device)
 
             for d in range(num_depth):
                 # step 2. differentiable homograph, build cost volume
