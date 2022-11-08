@@ -62,7 +62,7 @@ dl = dm.train_dataloader()
 
 ```
 
-In [results.ipynb](https://github.com/andreaconti/multi-view-guided-multi-view/blob/main/results.ipynb) there is an example of how to reproduce some of the results showed in the paper through the `torch.hub` API.
+In [results.ipynb](https://github.com/andreaconti/multi-view-guided-multi-view-stereo/blob/main/results.ipynb) there is an example of how to reproduce some of the results showed in the paper through the `torch.hub` API.
 
 ## Installation
 
