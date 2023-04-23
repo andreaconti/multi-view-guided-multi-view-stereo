@@ -1,10 +1,20 @@
 # Multi-View Guided Multi-View Stereo
 
-_[Matteo Poggi](https://mattpoggi.github.io/)\*, [Andrea Conti](https://andreaconti.github.io/)\*, [Stefano Mattoccia](http://vision.deis.unibo.it/~smatt/Site/Home.html)  *joint first authorship_
-
-
-[[arxiv]](https://arxiv.org/pdf/2210.11467v1.pdf)
-[[project page]](https://andreaconti.github.io/projects/multiview_guided_multiview_stereo/)
+<p>
+<div align="center">
+    <a href="https://mattpoggi.github.io">Matteo Poggi</a>*
+    &middot;
+    <a href="https://andreaconti.github.io">Andrea Conti</a>*
+    &middot;
+    <a href="http://vision.deis.unibo.it/~smatt/Site/Home.html">Stefano Mattoccia</a>
+    <i>*joint first authorship</i>
+</div>
+<div align="center">
+    <a href="https://arxiv.org/pdf/2210.11467v1.pdf">[Arxiv]</a>
+    <a href="https://andreaconti.github.io/projects/multiview_guided_multiview_stereo/">[Project Page]</a>
+    <a href="https://github.com/andreaconti/multi-view-guided-multi-view-stereo/blob/main/results.ipynb">[Demo]</a>
+</div>
+</p>
 
 This is the official source code of Multi-View Guided Multi-View Stereo presented at [IEEE/RSJ International Conference on Intelligent Robots and Systems](https://iros2022.org/)
 
