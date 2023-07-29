@@ -82,7 +82,7 @@ def _load_model(
                 }
             )
             model_net.train_params = meta
-        return model_net
+    return model_net
 
 
 def mvsnet(
